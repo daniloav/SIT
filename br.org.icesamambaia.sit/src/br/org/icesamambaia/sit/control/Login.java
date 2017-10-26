@@ -33,6 +33,7 @@ public class Login extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		logger.info("###ENTROU NO SERVLET LOGIN###");
+		//Test
 		String autLoginUser, autSenhaUser,tipoAcesso;
 		logger.info("Cria as variáveis para comparar a senha");
 		autLoginUser = request.getParameter("loginUser").trim();
