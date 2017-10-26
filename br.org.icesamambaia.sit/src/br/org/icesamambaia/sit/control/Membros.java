@@ -58,7 +58,6 @@ public class Membros extends HttpServlet {
 			logger.info("Instanciando cargo com o construtor");
 			VotanteDAO opBanco = new VotanteDAO();
 			logger.debug("Cria objeto para operacao no banco de dados");
-		
 
 			Votante v = new Votante(Integer.parseInt(request.getParameter("id")), request.getParameter("nome").trim(),
 					request.getParameter("sobrenome"), dataNascimentoFormatada, dataIngressoFormatada,
@@ -75,8 +74,7 @@ public class Membros extends HttpServlet {
 			rd.forward(request, response);
 			logger.info("Finalizado e redirecionado para:/jsp/dispatcherRequestResponse/returnCadastro.jsp");
 
-		}
-		else if(OPBD.equals("alterarVotante")){
+		} else if (OPBD.equals("alterarVotante")) {
 			logger.debug("##Entrando no if OPBD=alterarVotante##");
 			Votante vt = VotanteDAO.getInstance().le(request.getParameter("login"));
 			logger.debug("Carregando dados no objeto pegandos os dados correspondentes no banco");
@@ -84,15 +82,13 @@ public class Membros extends HttpServlet {
 			logger.debug("Criando dispatcher para /jsp/Membros/acaoAlterar.jsp");
 			rd.forward(request, response);
 			logger.info("Forward do request dispatcher executada");
-		}
-		else if(OPBD.equals("acaoAlterarVotante")) {
+		} else if (OPBD.equals("acaoAlterarVotante")) {
 
 			Cargo cargo = CargoDAO.getInstance().le(request.getParameter("cargo"));
 			logger.debug("Carregada dados no objeto com os dados do banco pesquisados");
 			logger.info("Instanciando cargo com o construtor");
 			VotanteDAO opBanco = new VotanteDAO();
 			logger.debug("Cria objeto para operacao no banco de dados");
-		
 
 			Votante v = new Votante(Integer.parseInt(request.getParameter("id")), request.getParameter("nome").trim(),
 					request.getParameter("sobrenome"), dataNascimentoFormatada, dataIngressoFormatada,
@@ -101,23 +97,30 @@ public class Membros extends HttpServlet {
 					request.getParameter("senha").trim(), cargo, request.getParameter("cpf").trim());
 			logger.info("Instanciando Votante com o construtor");
 
-			opBanco.altera(v);
-			logger.debug("Executa operacao de alteracao no base de dados");
+			int i = opBanco.altera(v);
+			logger.debug("Executando gravacao no banco e pegando retorno");
+			if (i == 1) {
+				logger.info("Entrou no if de transacao efetivada na base de dados");
+				RequestDispatcher rd = request.getRequestDispatcher("/jsp/AlertasFinais/msmFinalAlterarVotante.jsp");
+				logger.debug("Cria requestDispatcher para /jsp/AlertasFinais/msmFinalAlterarVotante.jsp");
+				rd.forward(request, response);
+				logger.info("Finalizado e redirecionado para /jsp/AlertasFinais/msmFinalAlterarVotante.jsp");
+			} else {
+				logger.info("Entrou no if de transacao NAO efetivada na base de dados");
+				RequestDispatcher rd = request
+						.getRequestDispatcher("/jsp/AlertasFinais/msmFinalAlterarVotanteERROBANCO.jsp");
+				logger.debug("Cria requestDispatcher para /jsp/AlertasFinais/msmFinalAlterarVotanteERROBANCO.jsp");
+				rd.forward(request, response);
+			}
 
-			RequestDispatcher rd = request.getRequestDispatcher("/jsp/AlertasFinais/msmFinalAlterarVotante.jsp");
-			logger.debug("Cria requestDispatcher para /jsp/AlertasFinais/msmFinalAlterarVotante.jsp");
-			rd.forward(request, response);
-			logger.info("Finalizado e redirecionado para /jsp/AlertasFinais/msmFinalAlterarVotante.jsp");
-			
-			
+		} else if (OPBD.equals("PesquisarVotante")) {
+		} else if (OPBD.equals("excluirVotante")) {
+		} else if (OPBD.equals("inserirCongregante")) {
+		} else if (OPBD.equals("alterarCongregante")) {
+		} else if (OPBD.equals("PesquisarCongregante")) {
+		} else if (OPBD.equals("excluirCongregante")) {
 		}
-		else if(OPBD.equals("PesquisarVotante")) {}
-		else if(OPBD.equals("excluirVotante")) {}
-		else if(OPBD.equals("inserirCongregante")){}
-		else if(OPBD.equals("alterarCongregante")){}
-		else if(OPBD.equals("PesquisarCongregante")) {}
-		else if(OPBD.equals("excluirCongregante")) {}
-		
+
 	}
 
 }

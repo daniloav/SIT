@@ -4,16 +4,9 @@ package br.org.icesamambaia.sit.model.DAO;
  * and open the template in the editor.
  */
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import br.org.icesamambaia.sit.model.Cargo;
 import br.org.icesamambaia.sit.model.Votante;
 
@@ -70,7 +63,8 @@ public class VotanteDAO {
 	private Votante carregaDadosNoObjeto(ResultSet rs) throws SQLException {
 		Cargo cargo = CargoDAO.getInstance().le(rs.getString("nome"));
 		Votante vt = new Votante(rs.getInt("id"), rs.getString("nome"), rs.getString("sobreNome"),
-				new java.util.Date(rs.getTimestamp("dataNascimento").getTime()),new java.util.Date(rs.getTimestamp("dataIngresso").getTime()), rs.getString("email"),
+				new java.util.Date(rs.getTimestamp("dataNascimento").getTime()),
+				new java.util.Date(rs.getTimestamp("dataIngresso").getTime()), rs.getString("email"),
 				rs.getString("telefone"), rs.getString("celular"), rs.getString("login"), rs.getString("senha"), cargo,
 				rs.getString("cpf"));
 		return vt;
@@ -96,6 +90,7 @@ public class VotanteDAO {
 				pstmt.setString(8, vt.getLogin());
 				pstmt.setString(9, vt.getSenha());
 				pstmt.setInt(10, cargo.getId());
+				pstmt.setString(11, vt.getCpf());
 
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -106,18 +101,36 @@ public class VotanteDAO {
 	}
 
 	public int altera(Votante vt) {
-		int n=0;
+		int n = 0;
 		Connection conn = ConnectionFactory.getInstance().criaConexao();
 		Cargo cargo = CargoDAO.getInstance().le(vt.getCargo().getNomeCargo());
-		if(conn!=null) {
+		if (conn != null) {
 			PreparedStatement pstmt = null;
-			try{}catch(SQLException e) {
+			try {
+				pstmt = conn.prepareStatement("update votante set "+
+						"nome=?,sobreNome=?,dataNascimento=?,dataIngresso=?,email=?,telefone=?,celular=?,login=?,senha=?,id_cargo=?,cpf=?"+
+						"where nome=?");
+				
+				pstmt.setString(1, vt.getNome());
+				pstmt.setString(2, vt.getSobreNome());
+				pstmt.setTimestamp(3, new Timestamp(vt.getDataNascimento().getTime()));
+				pstmt.setTimestamp(4, new Timestamp(vt.getDataIngresso().getTime()));
+				pstmt.setString(5, vt.getEmail());
+				pstmt.setString(6, vt.getTelefone());
+				pstmt.setString(7, vt.getCelular());
+				pstmt.setString(8, vt.getLogin());
+				pstmt.setString(9, vt.getSenha());
+				pstmt.setInt(10, cargo.getId());
+				pstmt.setString(11, vt.getCpf());
+				pstmt.setInt(12,vt.getNome());
+				
+			} catch (SQLException e) {
 				e.printStackTrace();
-				System.out.println("Alteração falhou!!!!"+e.getMessage());
+				System.out.println("Alteracao falhou!!!!" + e.getMessage());
 			}
 		}
 		return n;
-		
+
 	}
 
 }
