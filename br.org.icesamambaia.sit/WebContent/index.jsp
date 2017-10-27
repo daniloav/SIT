@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@include file="/jsp/Login/verificarCookie.jsp" %>
-<%@include file="/jsp/arquivosDeConfiguracaoDePagina/menu.jsp" %>
+<%@include file="/jsp/Configuracao/menu.jsp" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,7 +16,7 @@
     </head>
     <body>
         <br/><br/>
-        <center><img src="/jsp/arquivosDeConfiguracaoDePagina/IMAGENS/animateframes_2.jpg" alt="LOGO SIT" width="400"/></center>
+        <center><img src="/jsp/Configuracao/IMAGENS/animateframes_2.jpg" alt="LOGO SIT" width="400"/></center>
         
        <br/><br/><br/><br/><br/>
         <br/><br/><br/>

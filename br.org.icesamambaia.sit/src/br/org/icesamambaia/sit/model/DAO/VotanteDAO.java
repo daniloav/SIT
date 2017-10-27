@@ -4,9 +4,13 @@ package br.org.icesamambaia.sit.model.DAO;
  * and open the template in the editor.
  */
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
+
 import br.org.icesamambaia.sit.model.Cargo;
 import br.org.icesamambaia.sit.model.Votante;
 
@@ -122,7 +126,7 @@ public class VotanteDAO {
 				pstmt.setString(9, vt.getSenha());
 				pstmt.setInt(10, cargo.getId());
 				pstmt.setString(11, vt.getCpf());
-				pstmt.setInt(12,vt.getNome());
+				pstmt.setString(12,vt.getNome());
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
