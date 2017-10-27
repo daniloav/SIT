@@ -49,7 +49,7 @@ public class Auditoria implements Filter {
 		} catch (NullPointerException e) {
 			System.out.println("Erro"+e.getMessage());e.printStackTrace();
 		}
-		return membro.getEmail();
+		return membro.getEmail();//so pro commit
 
 	}
 }
